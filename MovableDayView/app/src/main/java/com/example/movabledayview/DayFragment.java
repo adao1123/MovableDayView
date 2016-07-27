@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 public class DayFragment extends android.support.v4.app.Fragment implements View.OnTouchListener{
 
     private static final String TAG = "DAY FRAGMENT";
-    private static final int viewSize = 60;
+    private static final int viewSize = 66;
     private static final int boundary = 35;
 
     private View view;
@@ -37,7 +37,7 @@ public class DayFragment extends android.support.v4.app.Fragment implements View
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated: in Fragment");
+        Log.i(TAG, "onViewCreated: in Fragment ");
         movableView.setOnTouchListener(this);
         width = getScreenWidth();
     }
@@ -49,8 +49,8 @@ public class DayFragment extends android.support.v4.app.Fragment implements View
                 dx = view.getX() - motionEvent.getRawX();
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (motionEvent.getRawX()+dx >= width-convertDpToPx(boundary+viewSize)) return false;
-                if (motionEvent.getRawX()+dx <= convertDpToPx(boundary)) return false;
+                if (motionEvent.getRawX()+dx >= width-convertDpToPx(boundary+viewSize)) return false; //sets boundaries
+                if (motionEvent.getRawX()+dx <= convertDpToPx(boundary)) return false; //sets boundaries
                 view.animate().x(motionEvent.getRawX()+dx).setDuration(0).start();
                 break;
             default:
@@ -59,12 +59,21 @@ public class DayFragment extends android.support.v4.app.Fragment implements View
         return true;
     }
 
+    /**
+     * Gets the size of the user's screen, returns int of the screen width
+     * @return
+     */
     private int getScreenWidth(){
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         return displayMetrics.widthPixels;
     }
 
+    /**
+     * Coverts the input dp and returns px
+     * @param dp
+     * @return
+     */
     private float convertDpToPx(int dp){
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
